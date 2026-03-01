@@ -1,4 +1,9 @@
 import os
+import sys
+
+# Ensure the app directory is in the python path for Render
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from flask import Flask, render_template
 from config.config import Config
 from extensions import db, bcrypt, login_manager
