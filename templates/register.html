@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 600px; margin: 40px auto;">
+    <div class="card">
+        <h2 style="text-align: center; margin-bottom: 30px;">Create an Account</h2>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-input", placeholder="Full Name") }}
+                {% for error in form.name.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-input", placeholder="Email") }}
+                    {% for error in form.email.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.phone.label(class="form-label") }}
+                    {{ form.phone(class="form-input", placeholder="Phone Number") }}
+                    {% for error in form.phone.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    {{ form.gender.label(class="form-label") }}
+                    {{ form.gender(class="form-input") }}
+                </div>
+                <div class="form-group">
+                    {{ form.dob.label(class="form-label") }}
+                    {{ form.dob(class="form-input", type="date") }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form.address.label(class="form-label") }}
+                {{ form.address(class="form-input", rows="2", placeholder="Enter your full address") }}
+                {% for error in form.address.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    {{ form.password.label(class="form-label") }}
+                    {{ form.password(class="form-input", placeholder="Password") }}
+                    {% for error in form.password.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.confirm_password.label(class="form-label") }}
+                    {{ form.confirm_password(class="form-input", placeholder="Confirm") }}
+                    {% for error in form.confirm_password.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+                </div>
+            </div>
+
+            {{ form.submit(class="btn btn-primary", style="width: 100%; margin-top: 20px;") }}
+        </form>
+        
+        <div style="margin-top: 30px; text-align: center; border-top: 1px solid #EEE; padding-top: 20px;">
+            <p style="color: var(--text-muted);">Already have an account? <a href="{{ url_for('auth.login') }}" style="color: var(--primary); font-weight: 600;">Login</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 600px; margin: 40px auto;">
+    <div class="card">
+        <h2 style="margin-bottom: 30px;"><i class="fas fa-user-md" style="color: var(--primary); margin-right: 15px;"></i>Register New Doctor</h2>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-input", placeholder="e.g. Sarah Johnson") }}
+                {% for error in form.name.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-input", placeholder="doctor@medicare.com") }}
+                {% for error in form.email.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    {{ form.specialization.label(class="form-label") }}
+                    {{ form.specialization(class="form-input", placeholder="e.g. Cardiology") }}
+                    {% for error in form.specialization.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.experience.label(class="form-label") }}
+                    {{ form.experience(class="form-input", type="number") }}
+                    {% for error in form.experience.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form.phone.label(class="form-label") }}
+                {{ form.phone(class="form-input", placeholder="Phone Number") }}
+                {% for error in form.phone.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-input", placeholder="Default Password") }}
+                {% for error in form.password.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+            </div>
+
+            <div style="display: flex; gap: 20px; margin-top: 30px;">
+                {{ form.submit(class="btn btn-primary", style="flex: 2;") }}
+                <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline" style="flex: 1;">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

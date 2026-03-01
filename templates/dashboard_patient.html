@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-header" style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <h1>Welcome, {{ patient.name }}</h1>
+        <p style="color: var(--text-muted);">Manage your health and appointments here.</p>
+    </div>
+    <a href="{{ url_for('patient.book_appointment') }}" class="btn btn-primary"><i class="fas fa-plus" style="margin-right: 10px;"></i>Book Appointment</a>
+</div>
+
+<div class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+        <div>
+            <div style="font-size: 24px; font-weight: 700;">{{ upcoming|length }}</div>
+            <div style="color: var(--text-muted); font-size: 14px;">Upcoming</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(38, 166, 154, 0.1); color: var(--secondary);"><i class="fas fa-check-circle"></i></div>
+        <div>
+            <div style="font-size: 24px; font-weight: 700;">{{ (appointments|length - upcoming|length) }}</div>
+            <div style="color: var(--text-muted); font-size: 14px;">Completed</div>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="padding: 0; overflow: hidden;">
+    <div style="padding: 24px; border-bottom: 1px solid #EEE; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0;">My Appointments</h3>
+    </div>
+    <div class="table-container" style="box-shadow: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Specialization</th>
+                    <th>Date & Time</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td><strong>Dr. {{ appointment.doctor.name }}</strong></td>
+                    <td>{{ appointment.doctor.specialization }}</td>
+                    <td>{{ appointment.date.strftime('%d %b, %Y') }} at {{ appointment.time.strftime('%I:%M %p') }}</td>
+                    <td><span class="status-badge status-{{ appointment.status.lower() }}">{{ appointment.status }}</span></td>
+                    <td>{{ appointment.reason[:30] }}{{ '...' if appointment.reason|length > 30 }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        No appointments found. <a href="{{ url_for('patient.book_appointment') }}" style="color: var(--primary);">Book one now!</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

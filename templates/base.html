@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicare - {{ title if title else 'Online Doctor Appointment' }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('main.index') }}" class="nav-logo">Medicare+</a>
+        
+        <div class="nav-links">
+            <a href="{{ url_for('main.index') }}" class="nav-item">Home</a>
+            <a href="{{ url_for('main.doctors') }}" class="nav-item">Find Doctors</a>
+            <a href="{{ url_for('main.about') }}" class="nav-item">About</a>
+            <a href="{{ url_for('main.services') }}" class="nav-item">Services</a>
+            <a href="{{ url_for('main.contact') }}" class="nav-item">Contact</a>
+            
+            {% if current_user.is_authenticated %}
+                {% if current_user.role == 'admin' %}
+                    <a href="{{ url_for('admin.dashboard') }}" class="nav-item">Dashboard</a>
+                {% elif current_user.role == 'doctor' %}
+                    <a href="{{ url_for('doctor.dashboard') }}" class="nav-item">Dashboard</a>
+                {% else %}
+                    <a href="{{ url_for('patient.dashboard') }}" class="nav-item">My Appointments</a>
+                {% endif %}
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-outline">Logout</a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}" class="nav-item">Login</a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Sign Up</a>
+            {% endif %}
+            
+            <div class="theme-switch" title="Toggle Dark Mode"></div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding: 20px 5%;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }}"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="nav-logo" style="margin-bottom: 20px;">Medicare+</div>
+                <p style="color: var(--text-muted);">The world's most trusted healthcare platform. Book appointments with top doctors in seconds.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('main.index') }}">Home</a></li>
+                    <li><a href="{{ url_for('main.about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('main.services') }}">Services</a></li>
+                    <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">For Patients</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('patient.book_appointment') }}">Book Appointment</a></li>
+                    <li><a href="{{ url_for('main.doctors') }}">Search Doctors</a></li>
+                    <li><a href="{{ url_for('patient.dashboard') }}">Patient Portal</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Connect</h4>
+                <ul class="footer-links">
+                    <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <p style="text-align: center; color: var(--text-muted); border-top: 1px solid #EEE; padding-top: 30px;">
+            &copy; 2026 Medicare Inc. All rights reserved.
+        </p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-header" style="margin-bottom: 40px;">
+    <h1>Doctor Portal</h1>
+    <p style="color: var(--text-muted);">Dr. {{ doctor.name }} | {{ doctor.specialization }}</p>
+</div>
+
+<div class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+        <div>
+            <div style="font-size: 24px; font-weight: 700;">{{ pending|length }}</div>
+            <div style="color: var(--text-muted); font-size: 14px;">Pending Approval</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(38, 166, 154, 0.1); color: var(--secondary);"><i class="fas fa-calendar-day"></i></div>
+        <div>
+            <div style="font-size: 24px; font-weight: 700;">{{ upcoming|length }}</div>
+            <div style="color: var(--text-muted); font-size: 14px;">Today's Appointments</div>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="padding: 0; overflow: hidden; margin-top: 40px;">
+    <div style="padding: 24px; border-bottom: 1px solid #EEE;">
+        <h3 style="margin: 0;">Patient Appointments</h3>
+    </div>
+    <div class="table-container" style="box-shadow: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Date & Time</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td><strong>{{ appointment.patient.name }}</strong></td>
+                    <td>{{ appointment.date.strftime('%d %b, %Y') }} at {{ appointment.time.strftime('%I:%M %p') }}</td>
+                    <td>{{ appointment.reason }}</td>
+                    <td><span class="status-badge status-{{ appointment.status.lower() }}">{{ appointment.status }}</span></td>
+                    <td>
+                        {% if appointment.status == 'Pending' %}
+                            <a href="{{ url_for('doctor.update_appointment', appointment_id=appointment.id, status='Approved') }}" class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;">Approve</a>
+                            <a href="{{ url_for('doctor.update_appointment', appointment_id=appointment.id, status='Cancelled') }}" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px; border-color: #C62828; color: #C62828;">Reject</a>
+                        {% elif appointment.status == 'Approved' %}
+                            <a href="{{ url_for('doctor.update_appointment', appointment_id=appointment.id, status='Completed') }}" class="btn btn-primary" style="padding: 6px 12px; font-size: 12px; background: var(--secondary); border: none;">Mark Completed</a>
+                        {% else %}
+                            <span style="color: var(--text-muted); font-size: 12px;">No actions</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-muted);">No appointments found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

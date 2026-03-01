@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 700px; margin: 40px auto;">
+    <div class="card">
+        <h2 style="margin-bottom: 30px;"><i class="fas fa-calendar-plus" style="color: var(--primary); margin-right: 15px;"></i>Book Appointment</h2>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.doctor.label(class="form-label") }}
+                {{ form.doctor(class="form-input") }}
+                {% for error in form.doctor.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    {{ form.date.label(class="form-label") }}
+                    {{ form.date(class="form-input", type="date") }}
+                    {% for error in form.date.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.time.label(class="form-label") }}
+                    {{ form.time(class="form-input", type="time") }}
+                    {% for error in form.time.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form.reason.label(class="form-label") }}
+                {{ form.reason(class="form-input", rows="4", placeholder="Explain your symptoms briefly...") }}
+                {% for error in form.reason.errors %}<span style="color: #C62828; font-size: 12px;">{{ error }}</span>{% endfor %}
+            </div>
+
+            <div style="display: flex; gap: 20px; margin-top: 30px;">
+                {{ form.submit(class="btn btn-primary", style="flex: 2;") }}
+                <a href="{{ url_for('patient.dashboard') }}" class="btn btn-outline" style="flex: 1;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

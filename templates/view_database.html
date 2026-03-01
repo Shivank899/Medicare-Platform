@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-header" style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <h1>Master Database View</h1>
+        <p style="color: var(--text-muted);">View all system records in one place.</p>
+    </div>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline">Back to Dashboard</a>
+</div>
+
+<div class="card" style="padding: 0; margin-bottom: 40px;">
+    <div style="padding: 24px; border-bottom: 1px solid #EEE;"><h3>All Registered Users</h3></div>
+    <div class="table-container" style="box-shadow: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Joined At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td><strong>{{ user.email }}</strong></td>
+                    <td><span class="status-badge" style="background: #EEE;">{{ user.role }}</span></td>
+                    <td>{{ user.created_at.strftime('%d %b, %Y') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card" style="padding: 0; margin-bottom: 40px;">
+    <div style="padding: 24px; border-bottom: 1px solid #EEE;"><h3>All Registered Doctors</h3></div>
+    <div class="table-container" style="box-shadow: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Experience</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr>
+                    <td>{{ doctor.id }}</td>
+                    <td><strong>Dr. {{ doctor.name }}</strong></td>
+                    <td>{{ doctor.specialization }}</td>
+                    <td>{{ doctor.experience }} Years</td>
+                    <td>{{ doctor.phone }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card" style="padding: 0; margin-bottom: 40px;">
+    <div style="padding: 24px; border-bottom: 1px solid #EEE;"><h3>All Registered Patients</h3></div>
+    <div class="table-container" style="box-shadow: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.id }}</td>
+                    <td><strong>{{ patient.name }}</strong></td>
+                    <td>{{ patient.phone }}</td>
+                    <td>{{ patient.gender }}</td>
+                    <td>{{ patient.dob.strftime('%d %b, %Y') }}</td>
+                    <td>{{ patient.address }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card" style="padding: 0;">
+    <div style="padding: 24px; border-bottom: 1px solid #EEE;"><h3>All Appointments</h3></div>
+    <div class="table-container" style="box-shadow: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Date & Time</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td>{{ appt.id }}</td>
+                    <td><strong>{{ appt.patient.name }}</strong></td>
+                    <td><strong>Dr. {{ appt.doctor.name }}</strong></td>
+                    <td>{{ appt.date.strftime('%d %b, %Y') }} | {{ appt.time.strftime('%I:%M %p') }}</td>
+                    <td><span class="status-badge status-{{ appt.status.lower() }}">{{ appt.status }}</span></td>
+                    <td>{{ appt.reason }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card" style="padding: 0; margin-top: 40px;">
+    <div style="padding: 24px; border-bottom: 1px solid #EEE;"><h3>All Contact Messages</h3></div>
+    <div class="table-container" style="box-shadow: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for msg in messages %}
+                <tr>
+                    <td>{{ msg.id }}</td>
+                    <td><strong>{{ msg.name }}</strong></td>
+                    <td>{{ msg.email }}</td>
+                    <td>{{ msg.message }}</td>
+                    <td>{{ msg.created_at.strftime('%d %b, %Y') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

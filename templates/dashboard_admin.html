@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-header" style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <h1>Admin Command Center</h1>
+        <p style="color: var(--text-muted);">Overview of platform activity and management.</p>
+    </div>
+    <div style="display: flex; gap: 15px;">
+        <a href="{{ url_for('admin.view_database') }}" class="btn btn-outline"><i class="fas fa-database" style="margin-right: 10px;"></i>View Master Database</a>
+        <a href="{{ url_for('admin.add_doctor') }}" class="btn btn-primary"><i class="fas fa-plus" style="margin-right: 10px;"></i>Add New Doctor</a>
+    </div>
+</div>
+
+<div class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-user-injured"></i></div>
+        <div>
+            <div style="font-size: 24px; font-weight: 700;">{{ total_patients }}</div>
+            <div style="color: var(--text-muted); font-size: 14px;">Total Patients</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(38, 166, 154, 0.1); color: var(--secondary);"><i class="fas fa-user-md"></i></div>
+        <div>
+            <div style="font-size: 24px; font-weight: 700;">{{ total_doctors }}</div>
+            <div style="color: var(--text-muted); font-size: 14px;">Total Doctors</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(255, 152, 0, 0.1); color: #FF9800;"><i class="fas fa-calendar-check"></i></div>
+        <div>
+            <div style="font-size: 24px; font-weight: 700;">{{ total_appointments }}</div>
+            <div style="color: var(--text-muted); font-size: 14px;">Total Appointments</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(103, 58, 183, 0.1); color: #673AB7;"><i class="fas fa-hourglass-half"></i></div>
+        <div>
+            <div style="font-size: 24px; font-weight: 700;">{{ upcoming_appointments }}</div>
+            <div style="color: var(--text-muted); font-size: 14px;">Upcoming</div>
+        </div>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-top: 40px;">
+    <div class="card" style="padding: 0;">
+        <div style="padding: 24px; border-bottom: 1px solid #EEE;"><h3>Recent Doctors</h3></div>
+        <div class="table-container" style="box-shadow: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Experience</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doctor in recent_doctors %}
+                    <tr>
+                        <td><strong>Dr. {{ doctor.name }}</strong></td>
+                        <td>{{ doctor.specialization }}</td>
+                        <td>{{ doctor.experience }} Years</td>
+                        <td>{{ doctor.phone }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>Platform Health</h3>
+        <div style="margin-top: 20px;">
+            <p style="margin-bottom: 10px; display: flex; justify-content: space-between;"><span>Server Status</span> <span style="color: #2E7D32; font-weight: 700;">Online</span></p>
+            <p style="margin-bottom: 10px; display: flex; justify-content: space-between;"><span>Database</span> <span style="color: #2E7D32; font-weight: 700;">Connected</span></p>
+            <p style="margin-bottom: 10px; display: flex; justify-content: space-between;"><span>Active Sessions</span> <span>12</span></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
