@@ -12,7 +12,11 @@
     <nav class="navbar">
         <a href="{{ url_for('main.index') }}" class="nav-logo">Medicare+</a>
         
-        <div class="nav-links">
+        <div class="nav-toggle" id="nav-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        
+        <div class="nav-links" id="nav-links">
             <a href="{{ url_for('main.index') }}" class="nav-item">Home</a>
             <a href="{{ url_for('main.doctors') }}" class="nav-item">Find Doctors</a>
             <a href="{{ url_for('main.about') }}" class="nav-item">About</a>

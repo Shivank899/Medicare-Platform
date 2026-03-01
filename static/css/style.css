@@ -49,7 +49,7 @@ h3 { font-size: 24px; margin-bottom: 16px; }
 
 a { text-decoration: none; color: inherit; transition: var(--transition); }
 
-/* Navigation */
+/* Responsive Navigation */
 .navbar {
     position: sticky;
     top: 0;
@@ -64,30 +64,55 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
     transition: var(--transition);
 }
 
-[data-theme="dark"] .navbar {
-    background: rgba(18, 18, 18, 0.8);
-}
-
-.nav-logo {
+.nav-toggle {
+    display: none;
     font-size: 1.5rem;
-    font-weight: 700;
-    background: var(--accent);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    color: var(--text-main);
 }
 
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
+/* Responsive Queries */
+@media (max-width: 992px) {
+    .hero { flex-direction: column; text-align: center; padding: 40px 5%; }
+    .hero-content { padding-right: 0; margin-bottom: 40px; }
+    .hero-image { width: 100%; max-width: 400px; margin: 0 auto; }
+    
+    .dashboard-container { flex-direction: column; }
+    .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #EEE; padding: 20px; }
 }
 
-.nav-item {
-    font-weight: 500;
-    color: var(--text-muted);
+@media (max-width: 768px) {
+    h1 { font-size: 32px; }
+    h2 { font-size: 26px; }
+    
+    .nav-toggle { display: block; }
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        flex-direction: column;
+        background: var(--white);
+        width: 100%;
+        height: calc(100vh - 70px);
+        padding: 40px;
+        transition: 0.4s ease;
+        box-shadow: var(--shadow-hover);
+        z-index: 999;
+        gap: 1.5rem;
+    }
+    
+    .nav-links.active { left: 0; }
+    
+    .stat-grid { grid-template-columns: 1fr; }
+    
+    /* Responsive Tables */
+    .table-container { overflow-x: auto; }
+    table { min-width: 600px; }
+    
+    .main-content { padding: 20px; }
+    
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
 }
-
-.nav-item:hover { color: var(--primary); }
 
 .btn {
     padding: 12px 24px;
